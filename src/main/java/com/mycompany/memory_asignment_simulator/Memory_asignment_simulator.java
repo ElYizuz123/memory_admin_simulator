@@ -23,6 +23,7 @@ public class Memory_asignment_simulator {
         primerAjuste();
         
     }
+    
     private static void primerAjuste() {
         System.out.println("-------------------- MÉTODO DEL PRIMER AJUSTE --------------------\n");
         System.out.println("|-----------------------------------| -> 0\n"
@@ -35,6 +36,7 @@ public class Memory_asignment_simulator {
                 +          "|                                   |\n"
                 +          "|-----------------------------------| -> "+memSize+"\n");
     }
+    
     private static void inicioPrograma() {
         System.out.print("Inserte el tamaño de la memoria: ");
         memSize=ent.nextInt();
