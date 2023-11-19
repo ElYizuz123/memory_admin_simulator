@@ -63,7 +63,16 @@ public class Memory_asignment_simulator {
                     if(comp==false){
                         for(Espacio es:freeSpace){
                             if(sizes[i]<=es.freeSize){
-
+                                exProcess.add(i);
+                                ram.add(new Espacio(es.memLocation, sizes[i]));
+                                if(es.freeSize==sizes[i]){
+                                    freeSpace.remove(es);
+                                }
+                                else{
+                                    es.memLocation=es.memLocation+sizes[i];
+                                    es.freeSize = es.freeSize-sizes[i];
+                                }
+                                
                             }
                         }
                     }
