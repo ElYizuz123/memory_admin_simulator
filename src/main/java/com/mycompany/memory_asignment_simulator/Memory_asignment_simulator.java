@@ -7,7 +7,7 @@ public class Memory_asignment_simulator {
 
     
     static class Espacio{
-        int memLocation, freeSize;
+        int memLocation, freeSize, idProcess;
         public Espacio(int memLocation, int freeSize) {
             this.memLocation = memLocation;
             this.freeSize = freeSize;
@@ -40,8 +40,25 @@ public class Memory_asignment_simulator {
             contFA++;
             for(int i:exProcess){
                 timeRaf[i]--;
-                if(timeRaf[i]<=0)
+                if(timeRaf[i]<=0){
                     exProcess.remove(i);
+                    for(Espacio sl: ram){
+                        if(sl.idProcess==i){
+                            freeSpace.add(new Espacio(sl.memLocation, sl.freeSize));
+                            sl.idProcess=-1;
+                        }
+                    }
+                }
+                    
+            }
+            for(int i=0; i<n; i++){
+                if(timeRaf[i]>0){
+                    for(Espacio es:freeSpace){
+                        
+                    }
+                }  
+                else
+                    continue;
             }
         }
     }
