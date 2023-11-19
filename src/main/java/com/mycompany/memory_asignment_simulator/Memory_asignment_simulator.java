@@ -4,18 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 public class Memory_asignment_simulator {
-    static int memSize, opSysSize, n;
-    static int sizes[], timeRaf[];
-    static List<EspacioLibre> freeSpace = new ArrayList<>();
-    static class EspacioLibre{
+    static class Espacio{
         int memLocation, freeSize;
-
-        public EspacioLibre(int memLocation, int freeSize) {
+        public Espacio(int memLocation, int freeSize) {
             this.memLocation = memLocation;
             this.freeSize = freeSize;
         }
-        
     }
+    static int memSize, opSysSize, n;
+    static int sizes[], timeRaf[];
+    static List<Espacio> freeSpace = new ArrayList<>();
+    static List<Espacio> ram = new ArrayList<>();
     public static void main(String[] args) {
         Scanner ent = new Scanner(System.in);
         System.out.print("Inserte el tamaño de la memoria: ");
@@ -24,7 +23,9 @@ public class Memory_asignment_simulator {
         opSysSize=ent.nextInt();
         System.out.print("Inserte el número de procesos: ");
         n=ent.nextInt();
-        freeSpace.add(new EspacioLibre(opSysSize, memSize-opSysSize));
+        freeSpace.add(new Espacio(opSysSize, memSize-opSysSize));
+        ram.add(new Espacio(0, opSysSize));
+        ram.add(new Espacio(opSysSize, memSize-opSysSize));
         sizes = new int[n];
         timeRaf = new int[n];
         for(int i=0; i<n; i++){
@@ -39,9 +40,9 @@ public class Memory_asignment_simulator {
                 +          "|                                   |\n"
                 +          "|-----------------------------------| -> "+opSysSize+"\n"
                 +          "|                                   |\n"
+                +          "|               Libre               |\n"
                 +          "|                                   |\n"
-                +          "|                                   |\n"
-                +          "|-----------------------------------| -> "+(memSize-opSysSize)+"\n");
+                +          "|-----------------------------------| -> "+memSize+"\n");
         //ent.nextLine();
     }
 }
