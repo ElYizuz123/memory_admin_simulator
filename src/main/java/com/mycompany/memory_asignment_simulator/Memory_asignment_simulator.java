@@ -1,16 +1,19 @@
 package com.mycompany.memory_asignment_simulator;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 public class Memory_asignment_simulator {
 
     
     static class Espacio{
-        int memLocation, freeSize, idProcess;
-        public Espacio(int memLocation, int freeSize) {
+        public int memLocation, freeSize, idProcess;
+        public Espacio(int memLocation, int freeSize, int idProcess) {
             this.memLocation = memLocation;
             this.freeSize = freeSize;
+            this.idProcess = idProcess;
         }
     }
     static int memSize, opSysSize, n, contFA=0, contBA=0, contWA=0;
@@ -44,7 +47,7 @@ public class Memory_asignment_simulator {
                     exProcess.remove(i);
                     for(Espacio sl: ram){
                         if(sl.idProcess==i){
-                            freeSpace.add(new Espacio(sl.memLocation, sl.freeSize));
+                            freeSpace.add(new Espacio(sl.memLocation, sl.freeSize, -1));
                             sl.idProcess=-1;
                         }
                     }
@@ -64,7 +67,7 @@ public class Memory_asignment_simulator {
                         for(Espacio es:freeSpace){
                             if(sizes[i]<=es.freeSize){
                                 exProcess.add(i);
-                                ram.add(new Espacio(es.memLocation, sizes[i]));
+                                ram.add(new Espacio(es.memLocation, sizes[i], i));
                                 if(es.freeSize==sizes[i]){
                                     freeSpace.remove(es);
                                 }
@@ -80,6 +83,25 @@ public class Memory_asignment_simulator {
                 else
                     continue;
             }
+            Collections.sort(freeSpace, Comparator.comparing(Espacio -> Espacio.memLocation));
+            Collections.sort(ram, Comparator.comparing(Espacio -> Espacio.memLocation));
+            
+            for(int i=0; i<freeSpace.size(); i++){
+                if((i+1)<freeSpace.size()){
+                    if((freeSpace.get(i).memLocation+freeSpace.get(i).freeSize)>=freeSpace.get(i+1).memLocation){
+                        freeSpace.get(i).freeSize=freeSpace.get(i).freeSize+freeSpace.get(i+1).freeSize;
+                        freeSpace.remove(i+1);
+                    }
+                }
+            }
+            for(int i=0; i<ram.size(); i++){
+                if((i+1)<ram.size()){
+                    if(ram.get(i).idProcess==-1&&ram.get(i+1).idProcess==-1){
+                        ram.get(i).freeSize=ram.get(i).freeSize+ram.get(i+1).freeSize;
+                        ram.remove(i+1);
+                    } 
+                }
+            }    
         }
     }
     
@@ -90,9 +112,9 @@ public class Memory_asignment_simulator {
         opSysSize=ent.nextInt();
         System.out.print("Inserte el número de procesos: ");
         n=ent.nextInt();
-        freeSpace.add(new Espacio(opSysSize, memSize-opSysSize));
-        ram.add(new Espacio(0, opSysSize));
-        ram.add(new Espacio(opSysSize, memSize-opSysSize));
+        freeSpace.add(new Espacio(opSysSize, memSize-opSysSize, -1));
+        ram.add(new Espacio(0, opSysSize, -2));
+        ram.add(new Espacio(opSysSize, memSize-opSysSize, -1));
         sizes = new int[n];
         timeRaf = new int[n];
         for(int i=0; i<n; i++){
