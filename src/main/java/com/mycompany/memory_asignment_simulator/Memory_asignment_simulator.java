@@ -53,8 +53,19 @@ public class Memory_asignment_simulator {
             }
             for(int i=0; i<n; i++){
                 if(timeRaf[i]>0){
-                    for(Espacio es:freeSpace){
-                        
+                    boolean comp=false;
+                    for(int j: exProcess){
+                        if(j==i){
+                            comp=true;
+                            break;
+                        }
+                    }
+                    if(comp==false){
+                        for(Espacio es:freeSpace){
+                            if(sizes[i]<=es.freeSize){
+
+                            }
+                        }
                     }
                 }  
                 else
