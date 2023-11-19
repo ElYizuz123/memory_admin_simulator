@@ -13,10 +13,11 @@ public class Memory_asignment_simulator {
             this.freeSize = freeSize;
         }
     }
-    static int memSize, opSysSize, n;
+    static int memSize, opSysSize, n, contFA=0, contBA=0, contWA=0;
     static int sizes[], timeRaf[];
     static List<Espacio> freeSpace = new ArrayList<>();
     static List<Espacio> ram = new ArrayList<>();
+    static List<Integer> exProcess = new ArrayList<>();
     static Scanner ent = new Scanner(System.in);
     public static void main(String[] args) {
         inicioPrograma();
@@ -35,6 +36,14 @@ public class Memory_asignment_simulator {
                 +          "|               Libre               |\n"
                 +          "|                                   |\n"
                 +          "|-----------------------------------| -> "+memSize+"\n");
+        while(true){
+            contFA++;
+            for(int i:exProcess){
+                timeRaf[i]--;
+                if(timeRaf[i]<=0)
+                    exProcess.remove(i);
+            }
+        }
     }
     
     private static void inicioPrograma() {
