@@ -33,7 +33,15 @@ public class Memory_asignment_simulator {
             System.out.print("Inserte el tiempo ráfaga del proceso "+i+": ");
             timeRaf[i]=ent.nextInt();
         }
-        
+        System.out.println("|-----------------------------------| -> 0\n"
+                +          "|                                   |\n"
+                +          "|         Sistema operativo         |\n"
+                +          "|                                   |\n"
+                +          "|-----------------------------------| -> "+opSysSize+"\n"
+                +          "|                                   |\n"
+                +          "|                                   |\n"
+                +          "|                                   |\n"
+                +          "|-----------------------------------| -> "+(memSize-opSysSize)+"\n");
         //ent.nextLine();
     }
 }
