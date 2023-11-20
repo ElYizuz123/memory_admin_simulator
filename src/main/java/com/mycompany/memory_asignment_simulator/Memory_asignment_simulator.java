@@ -46,6 +46,21 @@ public class Memory_asignment_simulator {
                 +          "|-----------------------------------| -> "+memSize+"\n"
                         + "--------------------------------------\n");
         while(true){
+            contFA++;
+            for(int i=0; i<exProcess.size(); i++){
+                timeRaf[exProcess.get(i)]--;
+                if(timeRaf[exProcess.get(i)]<=0){
+                    for(int j=0; j<ram.size(); j++){
+                        if(ram.get(j).idProcess==exProcess.get(i)){
+                            freeSpace.add(new Espacio(ram.get(j).memLocation, ram.get(j).freeSize, -1));
+                            ram.get(j).idProcess=-1;
+                        }
+                    }
+                    exProcess.remove(i);
+                    i--;
+                }
+                    
+            }
             int fin=0;
             for(int i=0; i<n; i++){
                 System.out.print("\nP"+i+" -> "+timeRaf[i]+" | ");
@@ -58,21 +73,6 @@ public class Memory_asignment_simulator {
             }
             else{
                 System.out.println("\n");
-            }
-            contFA++;
-            for(int i=0; i<exProcess.size(); i++){
-                timeRaf[i]--;
-                if(timeRaf[i]<=0){
-                    exProcess.remove(i);
-                    for(int j=0; j<ram.size(); j++){
-                        if(ram.get(j).idProcess==i){
-                            freeSpace.add(new Espacio(ram.get(j).memLocation, ram.get(j).freeSize, -1));
-                            ram.get(j).idProcess=-1;
-                        }
-                    }
-                    i--;
-                }
-                    
             }
             for(int i=0; i<n; i++){
                 if(timeRaf[i]>0){
