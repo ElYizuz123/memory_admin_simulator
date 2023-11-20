@@ -77,6 +77,27 @@ public class Memory_asignment_simulator {
             else{
                 System.out.println("\n");
             }
+            Collections.sort(freeSpace, Comparator.comparing(Espacio -> Espacio.memLocation));
+            Collections.sort(ram, Comparator.comparing(Espacio -> Espacio.memLocation));
+            
+            for(int i=0; i<freeSpace.size(); i++){
+                if((i+1)<freeSpace.size()){
+                    if((freeSpace.get(i).memLocation+freeSpace.get(i).freeSize)>=freeSpace.get(i+1).memLocation){
+                        freeSpace.get(i).freeSize=freeSpace.get(i).freeSize+freeSpace.get(i+1).freeSize;
+                        freeSpace.remove(i+1);
+                        i=0;
+                    }
+                }
+            }
+            for(int i=0; i<ram.size(); i++){
+                if((i+1)<ram.size()){
+                    if(ram.get(i).idProcess==-1&&ram.get(i+1).idProcess==-1){
+                        ram.get(i).freeSize=ram.get(i).freeSize+ram.get(i+1).freeSize;
+                        ram.remove(i+1);
+                        i=0;
+                    } 
+                }
+            }
             for(int i=0; i<n; i++){
                 if(timeRaf[i]>0){
                     boolean comp=false;
@@ -120,27 +141,7 @@ public class Memory_asignment_simulator {
                 else
                     continue;
             }
-            Collections.sort(freeSpace, Comparator.comparing(Espacio -> Espacio.memLocation));
             Collections.sort(ram, Comparator.comparing(Espacio -> Espacio.memLocation));
-            
-            for(int i=0; i<freeSpace.size(); i++){
-                if((i+1)<freeSpace.size()){
-                    if((freeSpace.get(i).memLocation+freeSpace.get(i).freeSize)>=freeSpace.get(i+1).memLocation){
-                        freeSpace.get(i).freeSize=freeSpace.get(i).freeSize+freeSpace.get(i+1).freeSize;
-                        freeSpace.remove(i+1);
-                        i=0;
-                    }
-                }
-            }
-            for(int i=0; i<ram.size(); i++){
-                if((i+1)<ram.size()){
-                    if(ram.get(i).idProcess==-1&&ram.get(i+1).idProcess==-1){
-                        ram.get(i).freeSize=ram.get(i).freeSize+ram.get(i+1).freeSize;
-                        ram.remove(i+1);
-                        i=0;
-                    } 
-                }
-            }
             for(Espacio pr: ram){
                 if(pr.idProcess==-2){
                     System.out.println("|-----------------------------------| -> 0\n"
@@ -219,6 +220,28 @@ public class Memory_asignment_simulator {
             else{
                 System.out.println("\n");
             }
+            Collections.sort(freeSpace, Comparator.comparing(Espacio -> Espacio.memLocation));
+            Collections.sort(ram, Comparator.comparing(Espacio -> Espacio.memLocation));
+            
+            for(int i=0; i<freeSpace.size(); i++){
+                if((i+1)<freeSpace.size()){
+                    if((freeSpace.get(i).memLocation+freeSpace.get(i).freeSize)>=freeSpace.get(i+1).memLocation){
+                        freeSpace.get(i).freeSize=freeSpace.get(i).freeSize+freeSpace.get(i+1).freeSize;
+                        freeSpace.remove(i+1);
+                        i=0;
+                    }
+                }
+            }
+            for(int i=0; i<ram.size(); i++){
+                if((i+1)<ram.size()){
+                    if(ram.get(i).idProcess==-1&&ram.get(i+1).idProcess==-1){
+                        ram.get(i).freeSize=ram.get(i).freeSize+ram.get(i+1).freeSize;
+                        ram.remove(i+1);
+                        i=0;
+                    } 
+                }
+            }
+            Collections.sort(freeSpace, Comparator.comparing(Espacio -> Espacio.freeSize));
             for(int i=0; i<n; i++){
                 if(timeRaf[i]>0){
                     boolean comp=false;
@@ -262,27 +285,7 @@ public class Memory_asignment_simulator {
                 else
                     continue;
             }
-            Collections.sort(freeSpace, Comparator.comparing(Espacio -> Espacio.memLocation));
             Collections.sort(ram, Comparator.comparing(Espacio -> Espacio.memLocation));
-            
-            for(int i=0; i<freeSpace.size(); i++){
-                if((i+1)<freeSpace.size()){
-                    if((freeSpace.get(i).memLocation+freeSpace.get(i).freeSize)>=freeSpace.get(i+1).memLocation){
-                        freeSpace.get(i).freeSize=freeSpace.get(i).freeSize+freeSpace.get(i+1).freeSize;
-                        freeSpace.remove(i+1);
-                        i=0;
-                    }
-                }
-            }
-            for(int i=0; i<ram.size(); i++){
-                if((i+1)<ram.size()){
-                    if(ram.get(i).idProcess==-1&&ram.get(i+1).idProcess==-1){
-                        ram.get(i).freeSize=ram.get(i).freeSize+ram.get(i+1).freeSize;
-                        ram.remove(i+1);
-                        i=0;
-                    } 
-                }
-            }
             for(Espacio pr: ram){
                 if(pr.idProcess==-2){
                     System.out.println("|-----------------------------------| -> 0\n"
@@ -309,10 +312,9 @@ public class Memory_asignment_simulator {
                 }
             }
             System.out.println("\n--------------------------------------------\n");
-            Collections.sort(freeSpace, Comparator.comparing(Espacio -> Espacio.freeSize));
         }
     }
-    private static void peorAjuste() {
+    private static void peorAjuste(){
         List<Espacio> freeSpace = new ArrayList<>();
         List<Espacio> ram = new ArrayList<>();
         List<Integer> exProcess = new ArrayList<>();
@@ -362,6 +364,29 @@ public class Memory_asignment_simulator {
             else{
                 System.out.println("\n");
             }
+            Collections.sort(freeSpace, Comparator.comparing(Espacio -> Espacio.memLocation));
+            Collections.sort(ram, Comparator.comparing(Espacio -> Espacio.memLocation));
+            
+            for(int i=0; i<freeSpace.size(); i++){
+                if((i+1)<freeSpace.size()){
+                    if((freeSpace.get(i).memLocation+freeSpace.get(i).freeSize)>=freeSpace.get(i+1).memLocation){
+                        freeSpace.get(i).freeSize=freeSpace.get(i).freeSize+freeSpace.get(i+1).freeSize;
+                        freeSpace.remove(i+1);
+                        i=0;
+                    }
+                }
+            }
+            for(int i=0; i<ram.size(); i++){
+                if((i+1)<ram.size()){
+                    if(ram.get(i).idProcess==-1&&ram.get(i+1).idProcess==-1){
+                        ram.get(i).freeSize=ram.get(i).freeSize+ram.get(i+1).freeSize;
+                        ram.remove(i+1);
+                        i=0;
+                    } 
+                }
+            }
+            Collections.sort(freeSpace, Comparator.comparing(Espacio -> Espacio.freeSize));
+            Collections.reverse(freeSpace);
             for(int i=0; i<n; i++){
                 if(timeRaf[i]>0){
                     boolean comp=false;
@@ -405,27 +430,7 @@ public class Memory_asignment_simulator {
                 else
                     continue;
             }
-            Collections.sort(freeSpace, Comparator.comparing(Espacio -> Espacio.memLocation));
             Collections.sort(ram, Comparator.comparing(Espacio -> Espacio.memLocation));
-            
-            for(int i=0; i<freeSpace.size(); i++){
-                if((i+1)<freeSpace.size()){
-                    if((freeSpace.get(i).memLocation+freeSpace.get(i).freeSize)>=freeSpace.get(i+1).memLocation){
-                        freeSpace.get(i).freeSize=freeSpace.get(i).freeSize+freeSpace.get(i+1).freeSize;
-                        freeSpace.remove(i+1);
-                        i=0;
-                    }
-                }
-            }
-            for(int i=0; i<ram.size(); i++){
-                if((i+1)<ram.size()){
-                    if(ram.get(i).idProcess==-1&&ram.get(i+1).idProcess==-1){
-                        ram.get(i).freeSize=ram.get(i).freeSize+ram.get(i+1).freeSize;
-                        ram.remove(i+1);
-                        i=0;
-                    } 
-                }
-            }
             for(Espacio pr: ram){
                 if(pr.idProcess==-2){
                     System.out.println("|-----------------------------------| -> 0\n"
@@ -452,8 +457,6 @@ public class Memory_asignment_simulator {
                 }
             }
             System.out.println("\n--------------------------------------------\n");
-            Collections.sort(freeSpace, Comparator.comparing(Espacio -> Espacio.freeSize));
-            Collections.reverse(freeSpace);
         }
     }
     private static void inicioPrograma() {
