@@ -27,6 +27,7 @@ public class Memory_asignment_simulator {
     }
     
     private static void primerAjuste() {
+        
         List<Espacio> freeSpace = new ArrayList<>();
         List<Espacio> ram = new ArrayList<>();
         List<Integer> exProcess = new ArrayList<>();
@@ -45,8 +46,21 @@ public class Memory_asignment_simulator {
                 +          "|-----------------------------------| -> "+memSize+"\n"
                         + "--------------------------------------\n");
         while(true){
+            int fin=0;
+            for(int i=0; i<n; i++){
+                System.out.print("\nP"+i+" -> "+timeRaf[i]+" | ");
+                if(timeRaf[i]==0){
+                    fin++;
+                }
+            }
+            if(fin>=n){
+                break;
+            }
+            else{
+                System.out.println("\n");
+            }
             contFA++;
-            for(int i:exProcess){
+            for(int i=0; i<exProcess.size(); i++){
                 timeRaf[i]--;
                 if(timeRaf[i]<=0){
                     exProcess.remove(i);
@@ -56,6 +70,7 @@ public class Memory_asignment_simulator {
                             ram.get(j).idProcess=-1;
                         }
                     }
+                    i--;
                 }
                     
             }
@@ -87,7 +102,7 @@ public class Memory_asignment_simulator {
                                     freeSpace.get(j).freeSize = freeSpace.get(j).freeSize-sizes[i];
                                     
                                 }
-                                
+                                break;
                             }
                         }
                     }
@@ -139,6 +154,8 @@ public class Memory_asignment_simulator {
                 +          "|-----------------------------------| -> "+(pr.memLocation+pr.freeSize));
                 }
             }
+            System.out.println("\n--------------------------------------------\n");
+            
         }
     }
     
