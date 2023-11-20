@@ -8,6 +8,8 @@ import java.util.Scanner;
 public class Memory_asignment_simulator {
 
     
+
+    
     static class Espacio{
         public int memLocation, freeSize, idProcess;
         public Espacio(int memLocation, int freeSize, int idProcess) {
@@ -25,8 +27,58 @@ public class Memory_asignment_simulator {
         primerAjuste();
         mejorAjuste();
         peorAjuste();
+        comparacion();
     }
-    
+    private static void comparacion() {
+        System.out.println("\n\nComparación:\n");
+        List<Integer> orden = new ArrayList<>();
+        orden.add(contFA);
+        orden.add(contBA);
+        orden.add(contWA);
+        Collections.sort(orden);
+        System.out.print("Con "+orden.get(0)+" iteraciones: ");
+        if(orden.get(0)==contFA){
+            System.out.println("Primer ajuste");
+            contFA=-1;
+        }
+        else if(orden.get(0)==contBA){
+             System.out.println("Mejor ajuste");
+             contBA=-1;
+        }
+        else if(orden.get(0)==contWA){
+            System.out.println("Peor ajuste");
+            contWA=-1;
+        }  
+        System.out.print("Con "+orden.get(1)+" iteraciones: ");
+        if(orden.get(1)==contFA){
+            System.out.println("Primer ajuste");
+            contFA=-1;
+        }
+        else if(orden.get(1)==contBA){
+            System.out.println("Mejor ajuste");
+            contBA=-1;
+        }
+        else if(orden.get(1)==contWA){
+            System.out.println("Peor ajuste");
+            contWA=-1;
+        }
+        System.out.print("Con "+orden.get(2)+" iteraciones: ");
+        if(orden.get(2)==contFA){
+            System.out.println("Primer ajuste");
+            contFA=-1;
+        }
+        else if(orden.get(2)==contBA){
+            System.out.println("Mejor ajuste");
+            contBA=-1;
+        }
+        else if(orden.get(2)==contWA){
+            System.out.println("Peor ajuste");
+            contWA=-1;
+        }
+            
+        
+            
+    }
     private static void primerAjuste() {     
         List<Espacio> freeSpace = new ArrayList<>();
         List<Espacio> ram = new ArrayList<>();
