@@ -63,7 +63,7 @@ public class Memory_asignment_simulator {
             }
             int fin=0;
             for(int i=0; i<n; i++){
-                System.out.print("\nP"+i+" -> "+timeRaf[i]+" | ");
+                System.out.print("\nP"+i+" -> "+timeRaf[i]+" | "+sizes[i]);
                 if(timeRaf[i]==0){
                     fin++;
                 }
@@ -89,6 +89,12 @@ public class Memory_asignment_simulator {
                                 exProcess.add(i);
                                 ram.add(new Espacio(freeSpace.get(j).memLocation, sizes[i], i));
                                 if(freeSpace.get(j).freeSize==sizes[i]){
+                                    for(int z=0; z<ram.size(); z++){
+                                        if(ram.get(z).memLocation==freeSpace.get(j).memLocation&&ram.get(z).idProcess==-1){
+                                            ram.remove(z);
+                                            break;
+                                        }
+                                    }
                                     freeSpace.remove(freeSpace.get(j));
                                 }
                                 else{
@@ -96,6 +102,7 @@ public class Memory_asignment_simulator {
                                         if(ram.get(z).memLocation==freeSpace.get(j).memLocation&&ram.get(z).idProcess==-1){
                                             ram.get(z).memLocation=freeSpace.get(j).memLocation+sizes[i];
                                             ram.get(z).freeSize = freeSpace.get(j).freeSize-sizes[i];
+                                            break;
                                         }
                                     }
                                     freeSpace.get(j).memLocation=freeSpace.get(j).memLocation+sizes[i];
@@ -140,14 +147,14 @@ public class Memory_asignment_simulator {
                 +          "|-----------------------------------| -> "+opSysSize);
                     
                 }
-                if(pr.idProcess==-1){
+                else if(pr.idProcess==-1){
                     System.out.println(
                            "|                                   |\n"
                 +          "|               Libre               |\n"
                 +          "|                                   |\n"
                 +          "|-----------------------------------| -> "+(pr.memLocation+pr.freeSize));
                 }
-                if(pr.idProcess>=0){
+                else if(pr.idProcess>=0){
                     String proceso = String.format("%18s", "P"+pr.idProcess);
                     System.out.println(
                            "|                                   |\n"
