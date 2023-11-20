@@ -118,6 +118,7 @@ public class Memory_asignment_simulator {
                     if((freeSpace.get(i).memLocation+freeSpace.get(i).freeSize)>=freeSpace.get(i+1).memLocation){
                         freeSpace.get(i).freeSize=freeSpace.get(i).freeSize+freeSpace.get(i+1).freeSize;
                         freeSpace.remove(i+1);
+                        i=0;
                     }
                 }
             }
@@ -126,6 +127,7 @@ public class Memory_asignment_simulator {
                     if(ram.get(i).idProcess==-1&&ram.get(i+1).idProcess==-1){
                         ram.get(i).freeSize=ram.get(i).freeSize+ram.get(i+1).freeSize;
                         ram.remove(i+1);
+                        i=0;
                     } 
                 }
             }
