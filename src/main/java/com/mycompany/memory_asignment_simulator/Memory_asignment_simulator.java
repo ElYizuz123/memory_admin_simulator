@@ -98,7 +98,6 @@ public class Memory_asignment_simulator {
                 +          "|-----------------------------------| -> "+memSize+"\n"
                         + "--------------------------------------\n");
         while(true){
-            contFA++;
             for(int i=0; i<exProcess.size(); i++){
                 timeRaf[exProcess.get(i)]--;
                 if(timeRaf[exProcess.get(i)]<=0){
@@ -220,9 +219,11 @@ public class Memory_asignment_simulator {
                 }
             }
             System.out.println("\n--------------------------------------------\n");
+            contFA++;
         }
     }
-    private static void mejorAjuste() {  
+    private static void mejorAjuste() {   
+        int contPE=0;
         List<Espacio> freeSpace = new ArrayList<>();
         List<Espacio> ram = new ArrayList<>();
         List<Integer> exProcess = new ArrayList<>();
@@ -241,10 +242,11 @@ public class Memory_asignment_simulator {
                 +          "|-----------------------------------| -> "+memSize+"\n"
                         + "--------------------------------------\n");
         while(true){
-            contBA++;
+            boolean act=false;
             for(int i=0; i<exProcess.size(); i++){
                 timeRaf[exProcess.get(i)]--;
                 if(timeRaf[exProcess.get(i)]<=0){
+                    act=true;
                     for(int j=0; j<ram.size(); j++){
                         if(ram.get(j).idProcess==exProcess.get(i)){
                             freeSpace.add(new Espacio(ram.get(j).memLocation, ram.get(j).freeSize, -1));
@@ -255,22 +257,6 @@ public class Memory_asignment_simulator {
                     i--;
                 }
                     
-            }
-            int fin=0;
-            for(int i=0; i<n; i++){
-                System.out.print("\nP"+i+" -> "+timeRaf[i]+" | "+sizes[i]);
-                if(timeRaf[i]==0){
-                    fin++;
-                }
-            }
-            if(fin>=n){
-                for(int i=0; i<n; i++){
-                    timeRaf[i]=timeRafDef[i];
-                }
-                break;
-            }
-            else{
-                System.out.println("\n");
             }
             Collections.sort(freeSpace, Comparator.comparing(Espacio -> Espacio.memLocation));
             Collections.sort(ram, Comparator.comparing(Espacio -> Espacio.memLocation));
@@ -306,7 +292,9 @@ public class Memory_asignment_simulator {
                     if(comp==false){
                         for(int j=0; j<freeSpace.size(); j++){
                             if(sizes[i]<=freeSpace.get(j).freeSize){
+                                act=true;
                                 exProcess.add(i);
+                                contPE++;
                                 ram.add(new Espacio(freeSpace.get(j).memLocation, sizes[i], i));
                                 if(freeSpace.get(j).freeSize==sizes[i]){
                                     for(int z=0; z<ram.size(); z++){
@@ -337,36 +325,59 @@ public class Memory_asignment_simulator {
                 else
                     continue;
             }
-            Collections.sort(ram, Comparator.comparing(Espacio -> Espacio.memLocation));
-            for(Espacio pr: ram){
-                if(pr.idProcess==-2){
-                    System.out.println("|-----------------------------------| -> 0\n"
-                +          "|                                   |\n"
-                +          "|         Sistema operativo         |\n"
-                +          "|                                   |\n"
-                +          "|-----------------------------------| -> "+opSysSize);
-                    
+            if(act==true){
+                int fin=0;
+                for(int i=0; i<n; i++){
+                    System.out.print("\nP"+i+" -> "+timeRaf[i]+" | "+sizes[i]);
+                    if(timeRaf[i]==0){
+                        fin++;
+                    }
                 }
-                else if(pr.idProcess==-1){
-                    System.out.println(
-                           "|                                   |\n"
-                +          "|               Libre               |\n"
-                +          "|                                   |\n"
-                +          "|-----------------------------------| -> "+(pr.memLocation+pr.freeSize));
+                if(fin>=n){
+                    for(int i=0; i<n; i++){
+                        timeRaf[i]=timeRafDef[i];
+                    }
+                    break;
                 }
-                else if(pr.idProcess>=0){
-                    String proceso = String.format("%18s", "P"+pr.idProcess);
-                    System.out.println(
-                           "|                                   |\n"
-                +          "|"+proceso+"                 |\n"
-                +          "|                                   |\n"
-                +          "|-----------------------------------| -> "+(pr.memLocation+pr.freeSize));
+                else{
+                    System.out.println("\n");
                 }
+                Collections.sort(ram, Comparator.comparing(Espacio -> Espacio.memLocation));
+                for(Espacio pr: ram){
+                    if(pr.idProcess==-2){
+                        System.out.println("|-----------------------------------| -> 0\n"
+                    +          "|                                   |\n"
+                    +          "|         Sistema operativo         |\n"
+                    +          "|                                   |\n"
+                    +          "|-----------------------------------| -> "+opSysSize);
+
+                    }
+                    else if(pr.idProcess==-1){
+                        System.out.println(
+                               "|                                   |\n"
+                    +          "|               Libre               |\n"
+                    +          "|                                   |\n"
+                    +          "|-----------------------------------| -> "+(pr.memLocation+pr.freeSize));
+                    }
+                    else if(pr.idProcess>=0){
+                        String proceso = String.format("%18s", "P"+pr.idProcess);
+                        System.out.println(
+                               "|                                   |\n"
+                    +          "|"+proceso+"                 |\n"
+                    +          "|                                   |\n"
+                    +          "|-----------------------------------| -> "+(pr.memLocation+pr.freeSize));
+                    }
+                }
+                System.out.println("\n--------------------------------------------\n");
+                contBA++;
+                if(contPE==n)
+                    break;
             }
-            System.out.println("\n--------------------------------------------\n");
+            
         }
     }
     private static void peorAjuste(){
+        int contPE=0;
         List<Espacio> freeSpace = new ArrayList<>();
         List<Espacio> ram = new ArrayList<>();
         List<Integer> exProcess = new ArrayList<>();
@@ -385,10 +396,11 @@ public class Memory_asignment_simulator {
                 +          "|-----------------------------------| -> "+memSize+"\n"
                         + "--------------------------------------\n");
         while(true){
-            contWA++;
+            boolean act=false;
             for(int i=0; i<exProcess.size(); i++){
                 timeRaf[exProcess.get(i)]--;
                 if(timeRaf[exProcess.get(i)]<=0){
+                    act=true;
                     for(int j=0; j<ram.size(); j++){
                         if(ram.get(j).idProcess==exProcess.get(i)){
                             freeSpace.add(new Espacio(ram.get(j).memLocation, ram.get(j).freeSize, -1));
@@ -451,6 +463,7 @@ public class Memory_asignment_simulator {
                     if(comp==false){
                         for(int j=0; j<freeSpace.size(); j++){
                             if(sizes[i]<=freeSpace.get(j).freeSize){
+                                act=true;
                                 exProcess.add(i);
                                 ram.add(new Espacio(freeSpace.get(j).memLocation, sizes[i], i));
                                 if(freeSpace.get(j).freeSize==sizes[i]){
@@ -482,33 +495,38 @@ public class Memory_asignment_simulator {
                 else
                     continue;
             }
-            Collections.sort(ram, Comparator.comparing(Espacio -> Espacio.memLocation));
-            for(Espacio pr: ram){
-                if(pr.idProcess==-2){
-                    System.out.println("|-----------------------------------| -> 0\n"
-                +          "|                                   |\n"
-                +          "|         Sistema operativo         |\n"
-                +          "|                                   |\n"
-                +          "|-----------------------------------| -> "+opSysSize);
-                    
+            
+            if(act==true){
+                Collections.sort(ram, Comparator.comparing(Espacio -> Espacio.memLocation));
+                for(Espacio pr: ram){
+                    if(pr.idProcess==-2){
+                        System.out.println("|-----------------------------------| -> 0\n"
+                    +          "|                                   |\n"
+                    +          "|         Sistema operativo         |\n"
+                    +          "|                                   |\n"
+                    +          "|-----------------------------------| -> "+opSysSize);
+
+                    }
+                    else if(pr.idProcess==-1){
+                        System.out.println(
+                               "|                                   |\n"
+                    +          "|               Libre               |\n"
+                    +          "|                                   |\n"
+                    +          "|-----------------------------------| -> "+(pr.memLocation+pr.freeSize));
+                    }
+                    else if(pr.idProcess>=0){
+                        String proceso = String.format("%18s", "P"+pr.idProcess);
+                        System.out.println(
+                               "|                                   |\n"
+                    +          "|"+proceso+"                 |\n"
+                    +          "|                                   |\n"
+                    +          "|-----------------------------------| -> "+(pr.memLocation+pr.freeSize));
+                    }
                 }
-                else if(pr.idProcess==-1){
-                    System.out.println(
-                           "|                                   |\n"
-                +          "|               Libre               |\n"
-                +          "|                                   |\n"
-                +          "|-----------------------------------| -> "+(pr.memLocation+pr.freeSize));
-                }
-                else if(pr.idProcess>=0){
-                    String proceso = String.format("%18s", "P"+pr.idProcess);
-                    System.out.println(
-                           "|                                   |\n"
-                +          "|"+proceso+"                 |\n"
-                +          "|                                   |\n"
-                +          "|-----------------------------------| -> "+(pr.memLocation+pr.freeSize));
-                }
+                System.out.println("\n--------------------------------------------\n");
+                contWA++;
             }
-            System.out.println("\n--------------------------------------------\n");
+            
         }
     }
     private static void inicioPrograma() {
